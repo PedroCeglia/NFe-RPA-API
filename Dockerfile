@@ -25,5 +25,8 @@ EXPOSE 5000
 ENV FLASK_APP=main.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
-# 9. Comando para rodar o servidor Flask
-CMD ["flask", "run"]
+# 9. Instalar o Gunicorn (se não estiver listado em requirements.txt)
+RUN pip install gunicorn
+
+# 10. Comando para rodar o servidor usando Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
