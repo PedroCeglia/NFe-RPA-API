@@ -8,6 +8,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/processar_arquivos": {"origins": "https://6z4wqd.csb.app"}})
 
+@app.route('/', methods=['GET'])
+def hello_world():
+    return jsonify({"mensage":"Hello World"})
 
 @app.route('/processar_arquivos', methods=['POST'])
 def processar_arquivos():
