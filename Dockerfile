@@ -1,7 +1,5 @@
-# 1. Base estável com OpenJDK 11 disponível
 FROM python:3.10-slim-bullseye
 
-# 2. Instala Java + dependências
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openjdk-11-jre-headless \
@@ -11,32 +9,23 @@ RUN apt-get update && \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. Diretório de trabalho
 WORKDIR /app
 
-# 4. Copia requirements primeiro (melhor cache)
+# Copia requirements
 COPY requirements.txt .
-
-# 5. Instala pacotes Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Baixa o JAR do tabula (evita falha em runtime)
+# Baixa tabula JAR
 RUN wget -q https://github.com/tabulapdf/tabula-java/releases/download/v1.0.5/tabula-1.0.5-jar-with-dependencies.jar \
     -O /usr/local/lib/tabula.jar
-
-# 7. Configura tabula-py
 ENV TABULA_JAR=/usr/local/lib/tabula.jar
 
-# 8. Copia apenas o necessário
-COPY main.py .
+# COPIA TODAS AS PASTAS E ARQUIVOS
+COPY . .
 
-# 9. Porta do Railway
+# Porta do Railway
 EXPOSE 8080
-
-# 10. Variáveis
-ENV FLASK_APP=main.py
-ENV FLASK_RUN_HOST=0.0.0.0
 ENV PORT=8080
 
-# 11. Inicia com Gunicorn
+# Inicia
 CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 "main:app"
