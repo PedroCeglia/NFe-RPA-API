@@ -18,9 +18,27 @@ def recuperar_planilhas(planilha):
         return isColumnValid
     
 
-def formatar_custo(item):   
-
-    return float("{:.2f}".format(float(item.replace(",",".")) / 100))
+def formatar_custo(item):
+    """
+    Converte qualquer valor de CUSTO para float com 2 casas decimais.
+    Aceita: '1.500,00', '1500.00', '1500', 1500.0
+    """
+    if pd.isna(item):
+        return 0.0
+    try:
+        # Converte para string
+        valor_str = str(item).strip()
+        # Remove espaços, R$, etc
+        valor_str = valor_str.replace('R$', '').replace(' ', '')
+        # Troca vírgula por ponto
+        valor_str = valor_str.replace(',', '.')
+        # Remove tudo que não for número ou ponto
+        import re
+        valor_str = re.sub(r'[^0-9.]', '', valor_str)
+        # Converte para float e divide por 100 (centavos)
+        return round(float(valor_str) / 100, 2)
+    except:
+        return 0.0
 
 def verificando_itens_duplicados(planilha: pd.DataFrame):
     """
