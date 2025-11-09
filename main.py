@@ -53,15 +53,14 @@ def processar_arquivos():
     nfe_pdfs_list = percorrer_lista_pdfs(pdf_files_valid)
     informacoes_nfe = create_planilhas_by_danfe(planilha_response["planilha"], nfe_pdfs_list)
 
-    # Monta a resposta JSON
+    # Monta a resposta JSON (CORRIGIDO)
     response = {
         "planilha_itens_nfe": informacoes_nfe["planilha_itens_nfe"],
         "planilha_itens_nao_encontrados": informacoes_nfe["planilha_itens_nao_encontrados"],
-        "planilha_total_itens": informacoes_nfe["planilha_total_itens"].to_json(orient="records"),
-        "planilha_duplicados":planilha_duplicados.to_json(orient="records")
+        "planilha_total_itens": informacoes_nfe["planilha_total_itens"].to_json(orient="records") if isinstance(informacoes_nfe["planilha_total_itens"], pd.DataFrame) else [],
+        "planilha_duplicados": planilha_duplicados.to_json(orient="records") if isinstance(planilha_duplicados, pd.DataFrame) else []
     }
 
-    # Retorna o JSON com as informações
     return jsonify(response), 200
 
 
