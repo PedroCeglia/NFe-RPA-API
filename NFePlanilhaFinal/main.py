@@ -24,8 +24,8 @@ def create_planilhas_by_danfe(planilha_items:pd.DataFrame, itens_danfe:dict, tit
         item_df, soma_total, erros_df = danfe_infos
         
         # Registra os erros e os itens
-        erros_by_nfe_dict.update({codigo:erros_df.to_json(orient="records")})
-        itens_by_nfe_dict.update({codigo:item_df.to_json(orient="records")})
+        erros_by_nfe_dict.update({codigo:erros_df.to_dict(orient="records")})
+        itens_by_nfe_dict.update({codigo:item_df.to_dict(orient="records")})
 
         nova_linha_df_total = pd.DataFrame([[codigo, soma_total]], columns=["numeroDaNota", "total"])
 
@@ -62,7 +62,7 @@ def recupera_informacoes_sobre_as_nfe(planilha_items:pd.DataFrame, itens_danfe:d
         df_nfe_itens_nao_encontrados = df_nfe_itens_validos[df_nfe_itens_validos["CUSTO"].isna() == True]
         
         # Recupera os itens da NFe que possuem um custo na planilha
-        df_nfe_itens_validos = df_nfe_itens_validos[df_nfe_itens_validos["QTDD"].isna() == False]
+        df_nfe_itens_validos = df_nfe_itens_validos[df_nfe_itens_validos["CUSTO"].isna() == False]
         
         # Caso tenha algum item da NFe sem um valor na coluna Custo
         if not df_nfe_itens_nao_encontrados.empty:
@@ -79,7 +79,7 @@ def recupera_informacoes_sobre_as_nfe(planilha_items:pd.DataFrame, itens_danfe:d
         # Define a ordem em que serão exibidas as colunas do dataframe
         # reset_index reinicia o index do dataframe
         # drop=True descarta o index original
-        df_nfe_itens_validos = df_nfe_itens_validos.reindex(columns=["PRODUTOS","Cod","CUSTO","QTDD","TOTAL"]).reset_index(drop=True)
+        df_nfe_itens_validos = df_nfe_itens_validos.reindex(columns=["ITEM","Cod","CUSTO","QTDD","TOTAL"]).reset_index(drop=True)
         
         # Recupera o valor final da nota
         df_soma_total = df_nfe_itens_validos["TOTAL"].sum()

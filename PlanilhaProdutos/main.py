@@ -35,8 +35,8 @@ def formatar_custo(item):
         # Remove tudo que não for número ou ponto
         import re
         valor_str = re.sub(r'[^0-9.]', '', valor_str)
-        # Converte para float e divide por 100 (centavos)
-        return round(float(valor_str) / 100, 2)
+        # Converte para float
+        return round(float(valor_str), 2)
     except:
         return 0.0
 
