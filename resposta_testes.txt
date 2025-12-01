@@ -1,0 +1,46 @@
+(venv) C:\Users\Pedro\Documents\python\NFe-RPA-API>python run_tests.py
+Variaveis de ambiente carregadas de: C:\Users\Pedro\Documents\python\NFe-RPA-API\.env.test
+Token configurado: bOVX7lwkTQ...
+Ambiente: homologacao
+
+============================================================
+Executando testes unitarios de Emissao de NFe
+============================================================
+
+======================= test session starts =======================
+platform win32 -- Python 3.11.3, pytest-8.0.0, pluggy-1.6.0 -- C:\Users\Pedro\Documents\python\NFe-RPA-API\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Pedro\Documents\python\NFe-RPA-API
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-4.1.0, mock-3.12.0
+collected 17 items
+
+tests/test_emissao_nfe.py::TestEmissaoNFe::test_emitir_nfe_erro_validacao PASSED [  5%]
+tests/test_emissao_nfe.py::TestEmissaoNFe::test_emitir_nfe_sem_referencia PASSED [ 11%]
+tests/test_emissao_nfe.py::TestEmissaoNFe::test_emitir_nfe_sem_token PASSED [ 17%]
+tests/test_emissao_nfe.py::TestEmissaoNFe::test_emitir_nfe_sucesso PASSED [ 23%]
+tests/test_emissao_nfe.py::TestConsultarNFe::test_consultar_nfe_erro_servidor PASSED [ 29%]
+tests/test_emissao_nfe.py::TestConsultarNFe::test_consultar_nfe_nao_encontrada PASSED [ 35%]
+tests/test_emissao_nfe.py::TestConsultarNFe::test_consultar_nfe_sucesso PASSED [ 41%]
+tests/test_emissao_nfe.py::TestCancelarNFe::test_cancelar_nfe_justificativa_curta PASSED [ 47%]
+tests/test_emissao_nfe.py::TestCancelarNFe::test_cancelar_nfe_nao_autorizada PASSED [ 52%]
+tests/test_emissao_nfe.py::TestCancelarNFe::test_cancelar_nfe_sucesso PASSED [ 58%]
+tests/test_emissao_nfe.py::TestGetApiConfig::test_get_api_config_homologacao PASSED [ 64%]
+tests/test_emissao_nfe.py::TestGetApiConfig::test_get_api_config_producao PASSED [ 70%]
+tests/test_emissao_nfe.py::TestGetApiConfig::test_get_api_config_sem_token PASSED [ 76%]
+tests/test_integracao_nfe.py::TestIntegracaoNFe::test_01_emitir_nfe_integracao PASSED [ 82%]
+tests/test_integracao_nfe.py::TestIntegracaoNFe::test_02_consultar_nfe_integracao SKIPPED [ 88%]
+tests/test_integracao_nfe.py::TestIntegracaoNFe::test_03_consultar_nfe_inexistente PASSED [ 94%]
+tests/test_integracao_nfe.py::TestIntegracaoNFe::test_04_cancelar_nfe_integracao SKIPPED [100%]
+
+---------- coverage: platform win32, python 3.11.3-final-0 -----------
+Name                     Stmts   Miss  Cover   Missing
+------------------------------------------------------
+EmissaoNFe\__init__.py       0      0   100%
+EmissaoNFe\main.py          61     10    84%   86-87, 142-149, 215-222
+------------------------------------------------------
+TOTAL                       61     10    84%
+
+
+================== 15 passed, 2 skipped in 0.68s ==================
